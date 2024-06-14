@@ -38,7 +38,7 @@ def cargar_datos_pasajeros():
 
     except FileNotFoundError:
         # Si el archivo no se encuentra se va a lanzar una excepcion llamada FileNotFoundError, la atraparemos e imprimiremos un mensaje y creamos la lista 'asientos' vacía
-        print("Archivo 'datos_vuelo.csv' no encontrado. Inicializando asientos vacíos.\n")
+        #print("Archivo 'datos_vuelo.csv' no encontrado. Inicializando asientos vacíos.\n")
         # Inicializamos 'asientos' con 42 listas vacías
         asientos = []
         for i in range(42):
@@ -67,8 +67,10 @@ def anular_pasaje(asientos):
             asientos[nroAsientoAAnular - 1] = []
             guardar_datos_pasajeros(asientos)
             print("Su pasaje ha sido anulado con éxito.\n")
-        else:
+        elif confirmacion == 'no':
             print("Operación cancelada.\n")
+        else:
+            print(" Ingrese solo si o no ")
 
 # Definimos esta función para visualizar los asientos disponibles
 def ver_asiento_disponible(asientos): # Esta función visualiza asientos disponibles
@@ -178,8 +180,10 @@ def comprar_pasajes(asientos, precioAsientoVIP, precioAsientoNormal):
         # Guardamos los datos actualizados de los pasajeros en el archivo CSV
         print("Pasaje comprado, gracias.\n")
         guardar_datos_pasajeros(asientos)
-    else:
+    elif confirmarCompra =="no":
         print("Compra anulada. \n")
+    else:
+        print(" Responda si o no ")
 
     
 # Definimos esta función para modificar los datos de los pasajeros
@@ -213,44 +217,51 @@ def modificar_datos_pasajero(asientos):
             print("RUT valido.\n")
 
             while True:
-                # Mostramos los datos del pasajero antes de anular el pasaje
-                print("Datos del pasajero a anular:")
-                print("Nombre:", asientos[nroAsiento - 1][0])
-                print("RUT:", asientos[nroAsiento - 1][1])
-                print("Teléfono:", asientos[nroAsiento - 1][2])
-                print("")
-                # Mostramos el menú de modificación de datos del pasajero
-                print("****Modificar datos pasajero****")
-                print("1. Modificar nombre pasajero.")
-                print("2. Modificar telefono pasajero.")
-                print("3. Salir.")
+                try:
+                    # Mostramos los datos del pasajero antes de anular el pasaje
+                    print("Datos del pasajero a anular:")
+                    print("Nombre:", asientos[nroAsiento - 1][0])
+                    print("RUT:", asientos[nroAsiento - 1][1])
+                    print("Teléfono:", asientos[nroAsiento - 1][2])
+                    print("")
+                    # Mostramos el menú de modificación de datos del pasajero
+                    print("****Modificar datos pasajero****")
+                    print("1. Modificar nombre pasajero.")
+                    print("2. Modificar telefono pasajero.")
+                    print("3. Salir.")
 
-                # Obtenemos la opción del usuario para modificar datos
-                opcionMenuPasajero = int(input("Seleccione una opción: "))
+                    # Obtenemos la opción del usuario para modificar datos
+                    opcionMenuPasajero = int(input("Seleccione una opción: "))
 
-                # Modificamos el nombre del pasajero
-                if opcionMenuPasajero == 1:
-                    nuevoNombrePasajero = input("Ingrese el nuevo nombre del pasajero: ")
-                    # Accedemos a la lista del asiento y cambiamos el nombre (índice 0 de la lista del asiento)
-                    asientos[nroAsiento - 1][0] = nuevoNombrePasajero
-                    guardar_datos_pasajeros(asientos)
-                    print("Nombre modificado con exito.\n")
+                    # Modificamos el nombre del pasajero
+                    if opcionMenuPasajero == 1:
+                        nuevoNombrePasajero = input("Ingrese el nuevo nombre del pasajero: ")
+                        # Accedemos a la lista del asiento y cambiamos el nombre (índice 0 de la lista del asiento)
+                        asientos[nroAsiento - 1][0] = nuevoNombrePasajero
+                        guardar_datos_pasajeros(asientos)
+                        print("Nombre modificado con exito.\n")
 
-                # Modificamos el teléfono del pasajero
-                elif opcionMenuPasajero == 2:
-                    nuevoTelefonoPasajero = input("Ingrese el nuevo telefono del pasajero: ")
-                    # Accedemos a la lista del asiento y cambiamos el teléfono (índice 2 de la lista del asiento)
-                    asientos[nroAsiento - 1][2] = nuevoTelefonoPasajero
-                    guardar_datos_pasajeros(asientos)
-                    print("telefono modificado con exito.\n")
+                    # Modificamos el teléfono del pasajero
+                    elif opcionMenuPasajero == 2:
+                        while True:
+                            try:
+                                nuevoTelefonoPasajero = int(input("Ingrese el nuevo telefono del pasajero: "))
+                                # Accedemos a la lista del asiento y cambiamos el teléfono (índice 2 de la lista del asiento)
+                                asientos[nroAsiento - 1][2] = nuevoTelefonoPasajero
+                                guardar_datos_pasajeros(asientos)
+                                print("telefono modificado con exito.\n")
+                                break
+                            except ValueError:
+                                print(" Ingrese solo numeros ")
 
-
-                # Salimos del menú de modificación de datos del pasajero
-                elif opcionMenuPasajero == 3:
-                    print("Saliendo...")
-                    break
-                else:
-                    # Opción no válida
-                    print("Seleccione una opcion valida.\n")
+                    # Salimos del menú de modificación de datos del pasajero
+                    elif opcionMenuPasajero == 3:
+                        print("Saliendo...")
+                        break
+                    else:
+                        # Opción no válida
+                        print("Seleccione una opcion valida.\n")
+                except ValueError:
+                    print(" Ingrese solo números ")
         else:
             print("Rut no encontrado.\n")
